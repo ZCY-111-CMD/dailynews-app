@@ -17,6 +17,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install Capacitor CLI and iOS platform
+        run: |
+          npm install @capacitor/ios
+          npm install -D @capacitor/cli
+
       - name: Build web app
         run: npm run build
 
