@@ -1,4 +1,4 @@
-name: iOS Build
+﻿name: iOS Build
 
 on:
   workflow_dispatch:
@@ -17,23 +17,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install Capacitor CLI and iOS platform
-        run: |
-          npm install @capacitor/ios
-          npm install -D @capacitor/cli
+      - name: Add @capacitor/ios
+        run: npm install @capacitor/ios@^8.3.0
 
       - name: Build web app
         run: npm run build
 
       - name: Add iOS platform
         run: npx cap add ios
-
-      - name: Remove incompatible plugins
-        run: |
-          npx cap rm @capacitor/status-bar || true
-          npx cap rm @capacitor/splash-screen || true
-          npx cap rm @capacitor/haptics || true
-          npx cap rm @capacitor/app || true
 
       - name: Sync iOS
         run: npx cap sync ios
