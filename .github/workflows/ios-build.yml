@@ -34,15 +34,7 @@ jobs:
       - name: Build iOS (without signing)
         run: |
           cd ios/App
-          ls -la
-          echo "---"
-          PROJECT_FILE=$(ls *.xcworkspace *.xcodeproj 2>/dev/null | head -1)
-          echo "Project file: $PROJECT_FILE"
-          if [[ "$PROJECT_FILE" == *.xcworkspace ]]; then
-            xcodebuild -workspace "$PROJECT_FILE" -scheme App -configuration Release -sdk iphoneos -archivePath build/App.xcarchive archive CODE_SIGNING_ALLOWED=NO 2>&1
-          else
-            xcodebuild -project "$PROJECT_FILE" -scheme App -configuration Release -sdk iphoneos -archivePath build/App.xcarchive archive CODE_SIGNING_ALLOWED=NO 2>&1
-          fi
+          xcodebuild -project App.xcodeproj -scheme App -configuration Release -sdk iphoneos -archivePath build/App.xcarchive archive CODE_SIGNING_ALLOWED=NO 2>&1
 
       - name: Create IPA
         run: |
