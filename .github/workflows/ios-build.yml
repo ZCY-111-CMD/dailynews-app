@@ -28,6 +28,13 @@ jobs:
       - name: Add iOS platform
         run: npx cap add ios
 
+      - name: Remove incompatible plugins
+        run: |
+          npx cap rm @capacitor/status-bar || true
+          npx cap rm @capacitor/splash-screen || true
+          npx cap rm @capacitor/haptics || true
+          npx cap rm @capacitor/app || true
+
       - name: Sync iOS
         run: npx cap sync ios
 
