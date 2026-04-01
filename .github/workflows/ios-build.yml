@@ -39,10 +39,13 @@ jobs:
       - name: Create IPA
         run: |
           cd ios/App
+          APP_NAME=$(ls build/App.xcarchive/Products/Applications/ | grep ".app$" | head -1)
+          echo "Found app: $APP_NAME"
           mkdir -p build/Payload
-          cp -r build/App.xcarchive/Products/Applications/App.app build/Payload/
+          cp -r "build/App.xcarchive/Products/Applications/$APP_NAME" build/Payload/
           cd build
           zip -r App.ipa Payload
+
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
