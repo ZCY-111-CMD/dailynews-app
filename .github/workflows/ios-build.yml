@@ -31,10 +31,18 @@ jobs:
       - name: Sync iOS
         run: npx cap sync ios
 
+      - name: List iOS project files
+        run: |
+          cd ios/App
+          ls -la
+          echo "---"
+          ls *.xcworkspace *.xcodeproj 2>/dev/null || true
+
       - name: Build iOS (without signing)
         run: |
           cd ios/App
-          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -sdk iphoneos -archivePath build/App.xcarchive archive CODE_SIGNING_ALLOWED=NO | xcpretty
+          xcodebuild -list
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -sdk iphoneos -archivePath build/App.xcarchive archive CODE_SIGNING_ALLOWED=NO 2>&1
 
       - name: Create IPA
         run: |
@@ -45,7 +53,6 @@ jobs:
           cp -r "build/App.xcarchive/Products/Applications/$APP_NAME" build/Payload/
           cd build
           zip -r App.ipa Payload
-
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
